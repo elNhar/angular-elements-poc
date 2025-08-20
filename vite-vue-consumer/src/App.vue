@@ -53,8 +53,4 @@ onMounted(async () => {
   padding: 0 1rem;
   max-width: 980px;
 }
-wc-carousel {
-  display: block;
-  height: 400px;
-}
 </style>
