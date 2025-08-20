@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HTML Static Consumer - Carousel</title>
+    <!-- Include the Angular Elements bundle served by the producer app -->
+    <script type="module" src="http://localhost:4000/elements/carousel/browser/polyfills.js"></script>
+    <script type="module" src="http://localhost:4000/elements/carousel/browser/main.js"></script>
+    <!-- Articles element bundle -->
+    <script type="module" src="http://localhost:4000/elements/articles/browser/polyfills.js"></script>
+    <script type="module" src="http://localhost:4000/elements/articles/browser/main.js"></script>
+    <style>
+      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 2rem; background: #f7f7f9; }
+      h1 { margin-top: 0; }
+      .container { max-width: 980px; margin: 0 auto; }
+      wc-carousel { display: block; height: 400px; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Static HTML Consumer using &lt;wc-carousel&gt; and &lt;wc-articles&gt;</h1>
+      <p>Make sure the producer server is running at <code>http://localhost:4000</code>.</p>
+
+      <wc-carousel id="demo"></wc-carousel>
+
+      <h2 style="margin-top:2rem;">Articles</h2>
+      <wc-articles id="articles"></wc-articles>
+    </div>
+
+    <script>
+      // Configure the carousel via element properties
+      const el = document.getElementById('demo');
+      el.images = [
+        { src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png', alt: 'Bulbasaur' },
+        { src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png', alt: 'Charmander' },
+        { src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png', alt: 'Squirtle' },
+        { src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png', alt: 'Pikachu' },
+        { src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/39.png', alt: 'Jigglypuff' },
+        { src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/52.png', alt: 'Meowth' },
+        { src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/54.png', alt: 'Psyduck' },
+        { src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/66.png', alt: 'Machop' },
+        { src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/74.png', alt: 'Geodude' },
+        { src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/129.png', alt: 'Magikarp' },
+        { src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png', alt: 'Eevee' },
+        { src: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/143.png', alt: 'Snorlax' },
+      ];
+      el.autoplay = true;
+      el.interval = 2200;
+      el.showArrows = true;
+      el.showDots = true;
+
+      el.addEventListener('slideChange', (e) => console.log('slide index:', e.detail));
+
+      // Configure wc-articles
+      (async () => {
+        if (!customElements.get('wc-articles')) {
+          await customElements.whenDefined('wc-articles');
+        }
+        const articlesEl = document.getElementById('articles');
+        if (articlesEl) {
+          articlesEl.articles = [
+            { title: 'Angular Elements with Signals', summary: 'Build reactive web components in Angular 18', image: 'https://picsum.photos/seed/s1/600/300', url: '#' },
+            { title: 'Real-time Search Filtering', summary: 'Use computed() to filter efficiently', image: 'https://picsum.photos/seed/s2/600/300' },
+            { title: 'Consume in React/Vue', summary: 'Drop-in usage across frameworks', image: 'https://picsum.photos/seed/s3/600/300', url: '#' }
+          ];
+        }
+      })();
+    </script>
+  </body>
+</html>

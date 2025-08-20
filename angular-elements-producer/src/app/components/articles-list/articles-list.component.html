@@ -1,0 +1,30 @@
+<div class="articles">
+  <div class="toolbar">
+    <input type="search" placeholder="Search articles..." (input)="query.set($any($event.target).value)" />
+  </div>
+
+  <div class="grid">
+    @for (a of filtered(); track a.title) {
+      <article class="card">
+        <a *ngIf="a.url; else noLink" [href]="a.url" target="_blank" rel="noopener">
+          <ng-container *ngTemplateOutlet="card; context: {$implicit: a}"></ng-container>
+        </a>
+        <ng-template #noLink>
+          <div class="nolink">
+            <ng-container *ngTemplateOutlet="card; context: {$implicit: a}"></ng-container>
+          </div>
+        </ng-template>
+      </article>
+    }
+  </div>
+
+  <ng-template #card let-a>
+    <div class="thumb" *ngIf="a.image">
+      <img [src]="a.image" [alt]="a.title" loading="lazy" />
+    </div>
+    <div class="meta">
+      <h3 class="title">{{ a.title }}</h3>
+      <p class="summary" *ngIf="a.summary">{{ a.summary }}</p>
+    </div>
+  </ng-template>
+</div>
